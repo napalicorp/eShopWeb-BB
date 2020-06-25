@@ -129,7 +129,8 @@ causing build break
                 config.Path = "/allservices";
             });
 
-            ConfigureProductionServices(services);
+            //ConfigureProductionServices(services);
+            ConfigureInMemoryDatabases(services);
 
             _services = services; // used to debug registered services
         }
