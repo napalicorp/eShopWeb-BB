@@ -11,11 +11,11 @@ jobs:
         with:
           dotnet-version: 3.1.101
       - name: Restore Nuget
-        run: find . -name "*.csproj" -exec dotnet restore '{}' \;
+        run: dotnet restore eShopOnWeb.sln
       - name: Build Projects
-        run: find . -name "*.csproj" -exec dotnet build '{}' \;
+        run: dotnet build eShopOnWeb.sln
       - name: Run Unit Tests
-        run: find tests/UnitTests -name "*.csproj" -exec dotnet test '{}' \;
+        run: dotnet test tests/UnitTests
       - name: Run Integration Tests
-        run: find tests/IntegrationTests -name "*.csproj" -exec dotnet test '{}' \;
+        run: dotnet tests/IntegrationTests
         
