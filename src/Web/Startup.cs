@@ -47,7 +47,7 @@ namespace Microsoft.eShopWeb.Web
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseInMemoryDatabase("Identity"));
         }
-
+causing build break
         private void ConfigureProductionServices(IServiceCollection services)
         {
             // use real database
