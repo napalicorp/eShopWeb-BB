@@ -40,3 +40,7 @@ jobs:
         with:
           name: eshop-web-package
           path: out
+      - name: Azure Login
+        uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
