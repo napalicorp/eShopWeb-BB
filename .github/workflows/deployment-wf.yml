@@ -31,6 +31,8 @@ jobs:
           path: out/
       
   deploy-staging:
+    env:
+      AZURE_WEBAPP_NAME: 'prep-napalieshop-web'
     runs-on: ubuntu-latest
     needs: [build]
     steps:
@@ -47,3 +49,9 @@ jobs:
       - name: Provision Azure Resources
         run: |
           az group deployment create -g ${{ env.AZURE_RESOURCE_GROUP_NAME }} --template-file arm/azuredeploy.json --parameters envPrefix=prep
+      - name: Azure WebApp
+        uses: Azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: staging
+          package: ./out
