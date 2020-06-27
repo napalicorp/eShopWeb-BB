@@ -7,9 +7,14 @@ env:
 
 jobs:
   build:
-    if: ${{ github.event.release.prerelease }}
+    if: "github.event.release.prerelease"
     runs-on: ubuntu-latest
     steps:
+      - name: Tracing
+        run: |
+          echo "-------------------------------------"
+          echo ${{ github.event.release.prerelease }}
+          echo "-------------------------------------"
       - uses: actions/checkout@v2
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
@@ -32,7 +37,7 @@ jobs:
           path: out/
       
   deploy-staging:
-    if: ${{ github.event.release.prerelease }}
+    if: "github.event.release.prerelease"
     env:
       AZURE_WEBAPP_NAME: 'prep-napalieshop-web'
     runs-on: ubuntu-latest
@@ -59,11 +64,16 @@ jobs:
           package: ./out
         
   deploy-prod:
-    if: ${{ github.event.release.release }}
+    if: "!github.event.release.prerelease"
     env:
       AZURE_WEBAPP_NAME: 'prep-napalieshop-web'
     runs-on: ubuntu-latest
     steps:
+      - name: Tracing
+        run: |
+          echo "-------------------------------------"
+          echo ${{ github.event.release.prerelease }}
+          echo "-------------------------------------"
       - name: Azure Login
         uses: Azure/login@v1.1
         with:
