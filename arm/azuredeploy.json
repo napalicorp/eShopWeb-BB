@@ -11,8 +11,8 @@
     },
     "functions": [],
     "variables": {
-        "appSvcPlanName": "[concat(parameters('envPrefix'),'napalieshop-asp')]",
-        "webAppName": "[concat(parameters('envPrefix'), 'napalieshop-web')]"
+        "appSvcPlanName": "[concat(parameters('envPrefix'),'-napalieshop-asp')]",
+        "webAppName": "[concat(parameters('envPrefix'), '-napalieshop-web')]"
     },
     "resources": [
         {
@@ -41,11 +41,11 @@
                 "displayName": "[variables('webAppName')]"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', '',variables('appSvcPlanName'))]"
+                "[resourceId('Microsoft.Web/serverfarms', variables('appSvcPlanName'))]"
             ],
             "properties": {
                 "name": "[variables('webAppName')]",
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', '',variables('appSvcPlanName'))]"
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms',variables('appSvcPlanName'))]"
             }
         }
     ],
