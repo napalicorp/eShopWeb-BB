@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "envPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Environment prefix used to name resources"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {
+        "appSvcPlanName": "[concat(parameters('envPrefix'),'napalieshop-asp')]",
+        "webAppName": "[concat(parameters('envPrefix'), 'napalieshop-web')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('appSvcPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2018-02-01",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "S1",
+                "capacity": 1
+            },
+            "tags": {
+                "displayName": "[variables('appSvcPlanName')]"
+            },
+            "properties": {
+                "name": "[variables('appSvcPlanName')]"
+            }
+        },
+        {
+            "name": "[variables('webAppName')]",
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2018-11-01",
+            "location": "[resourceGroup().location]",
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/',variables('appSvcPlanName'))]": "Resource",
+                "displayName": "[variables('webAppName')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', '',variables('appSvcPlanName'))]"
+            ],
+            "properties": {
+                "name": "[variables('webAppName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', '',variables('appSvcPlanName'))]"
+            }
+        }
+    ],
+    "outputs": {}
+}
