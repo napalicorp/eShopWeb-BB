@@ -1,3 +1,5 @@
+name: Deployment Workflow
+
 on:
   release:
     types: [created, edited]
